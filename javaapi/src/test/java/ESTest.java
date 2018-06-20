@@ -66,32 +66,6 @@ public class ESTest {
   }
 
   /**
-   * 通过prepareGet方法获取指定文档信息
-   */
-  public void testGet() {
-    GetResponse getResponse = client.prepareGet(index, type, "1").get();
-    System.out.println(getResponse.getSourceAsString());
-  }
-
-  /**
-   * prepareUpdate更新索引库中文档，如果文档不存在则会报错
-   * @throws IOException
-   *
-   */
-  public void testUpdate() throws IOException
-  {
-    XContentBuilder source = XContentFactory.jsonBuilder()
-            .startObject()
-            .field("name", "will")
-            .endObject();
-
-    UpdateResponse updateResponse = client
-            .prepareUpdate(index, type, "6").setDoc(source).get();
-
-    System.out.println(updateResponse.getVersion());
-  }
-
-  /**
    * 通过prepareIndex增加文档，参数为json字符串
    */
   @Test
@@ -106,13 +80,14 @@ public class ESTest {
   /**
    * 通过prepareIndex增加文档，参数为Map<String,Object>
    */
+  @Test
   public void testIndexMap()
   {
     Map<String, Object> source = new HashMap<String, Object>(2);
-    source.put("name", "Alice");
-    source.put("age", 16);
+    source.put("name", "Lori");
+    source.put("age", 3);
     IndexResponse indexResponse = client
-            .prepareIndex(index, type, "4").setSource(source).get();
+            .prepareIndex(index, type, "10").setSource(source).get();
     System.out.println(indexResponse.getVersion());
   }
 
@@ -122,6 +97,7 @@ public class ESTest {
    * @throws ElasticsearchException
    * @throws JsonProcessingException
    */
+  @Test
   public void testIndexBean() throws ElasticsearchException, JsonProcessingException
   {
     Student stu = new Student();
@@ -141,6 +117,7 @@ public class ESTest {
    * @throws InterruptedException
    * @throws ExecutionException
    */
+  @Test
   public void testIndexXContentBuilder() throws IOException, InterruptedException, ExecutionException
   {
     XContentBuilder builder = XContentFactory.jsonBuilder()
@@ -157,9 +134,38 @@ public class ESTest {
   }
 
   /**
+   * 通过prepareGet方法获取指定文档信息
+   */
+  @Test
+  public void testGet() {
+    GetResponse getResponse = client.prepareGet(index, type, "1").get();
+    System.out.println(getResponse.getSourceAsString());
+  }
+
+  /**
+   * prepareUpdate更新索引库中文档，如果文档不存在则会报错
+   * @throws IOException
+   *
+   */
+  @Test
+  public void testUpdate() throws IOException
+  {
+    XContentBuilder source = XContentFactory.jsonBuilder()
+            .startObject()
+            .field("name", "will")
+            .endObject();
+
+    UpdateResponse updateResponse = client
+            .prepareUpdate(index, type, "6").setDoc(source).get();
+
+    System.out.println(updateResponse.getVersion());
+  }
+
+  /**
    * 通过prepareDelete删除文档
    *
    */
+  @Test
   public void testDelete()
   {
     String id = "9";
@@ -172,6 +178,7 @@ public class ESTest {
   /**
    * 删除索引库，不可逆慎用
    */
+  @Test
   public void testDeleteeIndex()
   {
     client.admin().indices().prepareDelete("shb01","shb02").get();
@@ -180,6 +187,7 @@ public class ESTest {
   /**
    * 求索引库文档总数
    */
+  @Test
   public void testCount()
   {
     long count = client.prepareCount(index).get().getCount();
@@ -191,6 +199,7 @@ public class ESTest {
    *
    * @throws IOException
    */
+  @Test
   public void testBulk() throws IOException
   {
     //1:生成bulk
@@ -236,6 +245,7 @@ public class ESTest {
    * setSearchType(SearchType.QUERY_THEN_FETCH)
    *
    */
+  @Test
   public void testSearch()
   {
     SearchResponse searchResponse = client.prepareSearch(index)
@@ -264,6 +274,7 @@ public class ESTest {
    * 多索引，多类型查询
    * timeout
    */
+  @Test
   public void testSearchsAndTimeout()
   {
     SearchResponse searchResponse = client.prepareSearch("shb01","shb02").setTypes("stu","tea")
@@ -285,6 +296,7 @@ public class ESTest {
   /**
    * 高亮
    */
+  @Test
   public void testHighLight()
   {
     SearchResponse searchResponse = client.prepareSearch(index)
@@ -318,6 +330,7 @@ public class ESTest {
   /**
    * 分组
    */
+  @Test
   public void testGroupBy()
   {
     SearchResponse searchResponse = client.prepareSearch(index).setTypes(type)
@@ -339,6 +352,7 @@ public class ESTest {
    * 聚合函数,本例之编写了sum，其他的聚合函数也可以实现
    *
    */
+  @Test
   public void testMethod()
   {
     SearchResponse searchResponse = client.prepareSearch(index).setTypes(type)

@@ -7,6 +7,8 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -113,6 +115,13 @@ public class ESController {
     //设置分页(拿第一页，一页显示两条)
     //注意!es的分页api是从第0页开始的(坑)
     PageRequest page = new PageRequest(0, 10);
+
+/*    FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery()
+            .add(QueryBuilders.matchPhraseQuery("abstracts", 1),
+                    ScoreFunctionBuilders.weightFactorFunction(1000))
+            .add(QueryBuilders.matchPhraseQuery("content", 2),
+                    ScoreFunctionBuilders.weightFactorFunction(500))
+            .scoreMode("sum").setMinScore(10);*/
 
     //构建查询
     NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
