@@ -50,8 +50,8 @@ import java.util.concurrent.ExecutionException;
  * ES client操作（6.x版本，启动client失败）
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = ESTest2.class)
-public class ESTest2 {
+@SpringBootTest(classes = ESTest.class)
+public class ESTest {
 
   // 客户端
   private TransportClient client;

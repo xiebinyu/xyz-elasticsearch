@@ -9,8 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>springboot</module>
-        <module>javaapi</module>
+        <module>springdata</module>
+        <module>client_2.4</module>
+        <module>client_6.3</module>
     </modules>
 
     <parent>
