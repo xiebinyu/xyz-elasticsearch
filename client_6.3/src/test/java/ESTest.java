@@ -56,16 +56,16 @@ public class ESTest {
   // 客户端
   private TransportClient client;
   // 索引库名
-  private String index = "project_study";
+  private String index = "student-info";
   // 类型名称
-  private String type = "student";
+  private String type = "student-info";
 
   @Before
   public void initial() throws UnknownHostException {
     //设置集群名称
-    Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
+//    Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
     //创建client
-    client = new PreBuiltTransportClient(settings)
+    client = new PreBuiltTransportClient(Settings.EMPTY)
             .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
   }
 
